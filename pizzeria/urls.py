@@ -1,7 +1,7 @@
-"""pizzeria_ucab URL Configuration
+"""charts URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.11/topics/http/urls/
+    https://docs.djangoproject.com/en/1.10/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -14,10 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from django.urls import include, path
 from django.contrib import admin
+from django.urls import include, path
+
+from .views import HomeView, get_data, ChartData
+
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    path('pizzeria/', include('pizzeria.urls')),
+    url(r'^$', HomeView.as_view(), name='home'),
+    url(r'^api/data/$', get_data, name='api-data'),
+    url(r'^api/chart/data/$', ChartData.as_view()),
 ]
