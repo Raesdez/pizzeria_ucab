@@ -11,7 +11,7 @@ User = get_user_model()
 
 class HomeView(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'charts.html', {"customers": 10})
+        return render(request, 'admin/charts.html', {"customers": 10})
 
 
 
