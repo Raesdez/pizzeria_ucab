@@ -1,0 +1,51 @@
+{% extends 'plantillas/public.html' %}
+
+{% block content %}
+
+<form method="post">
+	{% csrf_token %}
+
+	<div class="row">
+
+		<div class="col-md-8 col-md-offset-2">
+			<div class="form-group">
+				<label for="{{form2.client_name.name}}">{{form2.client_name.label}}</label>
+        {{form2.client_name}}
+			</div>
+		</div>
+    <div class="col-md-8 col-md-offset-2">
+			<div class="form-group">
+				<label for="{{form2.client_id.name}}">{{form2.client_id.label}}</label>
+        {{form2.client_id}}
+			</div>
+		</div>
+    <div class="col-md-8 col-md-offset-2">
+			<div class="form-group">
+				<label for="{{form2.drink.name}}">{{form2.drink.label}}</label>
+        {{form2.drink}}
+			</div>
+		</div>
+
+    <div class="col-md-8 col-md-offset-2">
+			<div class="form-group">
+				<label for="{{form.size.name}}">{{form.size.label}}</label>
+        {{form.size}}
+			</div>
+		</div>
+    <div class="col-md-8 col-md-offset-2">
+			<div class="form-group">
+				<label for="{{form.ingredient.name}}">{{form.ingredient.label}}</label>
+        {{form.ingredient}}
+			</div>
+		</div>
+
+		</div>
+    <div class="col-md-8 col-md-offset-2">
+			<div class="form-group">
+				<button class="btn btn-primary" type="submit">Guardar</button>
+			</div>
+		</div>
+
+</form>
+
+{% endblock %}

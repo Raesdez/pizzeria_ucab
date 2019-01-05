@@ -17,12 +17,13 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include, path
 
-from .views import HomeView, get_data, ChartData, index
+from .views import HomeView, get_data, ChartData, index, PizzaCreate
 
 
 urlpatterns = [
-    url(r'^$', index),
+    url(r'^$', index, name='index'),
     url(r'^reportes', HomeView.as_view(), name='home'),
     url(r'^api/data/$', get_data, name='api-data'),
     url(r'^api/chart/data/$', ChartData.as_view()),
+    url(r'^purchase', PizzaCreate.as_view(), name='compra'),
 ]
