@@ -67,6 +67,7 @@ class PizzaCreate(CreateView):
         if form.is_valid() and form2.is_valid():
             pizza = form.save(commit=False)
             pizza.purchase = form2.save()
+            pizza = form.save()
             pizza.save()
             return HttpResponseRedirect(self.get_success_url())
         else:
