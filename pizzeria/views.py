@@ -22,7 +22,7 @@ def get_data(request, *args, **kwargs):
     }
     return JsonResponse(data) # http response
 
-
+# Rutas para los reportes
 class ChartData(APIView):
     authentication_classes = []
     permission_classes = []
@@ -38,6 +38,6 @@ class ChartData(APIView):
         print ("The data is",data)
         return Response(data)
 
-
+#------------------------------------------------------------------------------
 def index(request):
     return render(request, 'public/home.html')
