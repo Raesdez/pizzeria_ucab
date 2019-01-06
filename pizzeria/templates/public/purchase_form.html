@@ -1,8 +1,8 @@
 {% extends 'plantillas/public.html' %}
 {% load static %}
 
-
 {% block content %}
+<center>
     <h2>Compra</h2>
     <hr>
     <div class="col-md-4">
@@ -38,11 +38,11 @@
                     </tr>
                 {% endfor %}
             </table>
-            <button class="btn btn-primary" type="submit">Comprar</button>
-            </p>
+            <button class="btn btn-primary" type="submit">Comprar</button> <p></p>
             <a href="{% url 'index' %}">Volver a inicio</a>
         </form>
     </div>
+    </center>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="{% static 'js/jquery.formset.js' %}"></script>
     <script type="text/javascript">
