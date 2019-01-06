@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Sum
+form django.core.exceptions import ValidationError
 
 
 # Create your models here.
@@ -11,12 +12,24 @@ class Size(models.Model):
     def __str__(self):
         return '{} {}'.format(self.name, self.price)
 
+    def clean(self):
+        if self.price<0:
+            raise ValidationError('El precio debe ser positivo')
+        else:
+            return True
+
 class Ingredient(models.Model):
     name = models.CharField(max_length=50, blank=False)
     price = models.FloatField(default=0, blank=False)
 
     def __str__(self):
         return '{} {}'.format(self.name, self.price)
+
+    def clean(self):
+        if self.price<0:
+            raise ValidationError('El precio debe ser positivo')
+        else:
+            return True
 
 class Drink(models.Model):
     name = models.CharField(max_length=50, blank=False)
@@ -25,6 +38,12 @@ class Drink(models.Model):
 
     def __str__(self):
         return '{} {} {}'.format(self.name, self.size, self.price)
+
+    def clean(self):
+        if self.price<0:
+            raise ValidationError('El precio debe ser positivo')
+        else:
+            return True
 
 class Purchase(models.Model):
     total_price = models.FloatField(default=0, blank=False)
