@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render,render_to_response
 from django.views.generic import View, CreateView
 from pizzeria.models import Purchase, Pizza
 from pizzeria.forms import PizzaForm, PurchaseForm, PizzaFormSet
@@ -46,11 +46,16 @@ class ChartData(APIView):
 def index(request):
     return render(request, 'public/home.html')
 
+def receipt(request):
+    purchase = Purchase.objects.latest('date')
+    pizzas = Pizza.objects.filter(purchase=purchase.pk)
+    return render_to_response('public/receipt.html', {'purchase': purchase,'pizzas':pizzas})
+
 class PurchasePizzaCreate(CreateView):
     model = Purchase
     form_class = PurchaseForm
     template_name = 'public/purchase_form.html'
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('receipt')
 
     def get_context_data(self, **kwargs):
         data = super(PurchasePizzaCreate, self).get_context_data(**kwargs)

@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include, path
 
-from .views import HomeView, get_data, ChartData, index,PurchasePizzaCreate
+from .views import HomeView, get_data, ChartData, index,PurchasePizzaCreate, receipt
 
 
 urlpatterns = [
@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^api/data/$', get_data, name='api-data'),
     url(r'^api/chart/data/$', ChartData.as_view()),
     url(r'^purchase', PurchasePizzaCreate.as_view(), name='compra'),
+    url(r'^receipt',receipt,name='receipt')
 ]

@@ -1,0 +1,53 @@
+{% extends 'plantillas/public.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Resumen de la compra</h1>
+</p>
+<h3> Datos de la compra </h3>
+<table class="table">
+      <tr>
+        <td>Cliente: {{ purchase.client_name }}</td>
+        <td>Cédula: {{ purchase.client_id }}</td>
+        <td>Fecha: {{ purchase.date |date:'d/m/Y H:i' }} </td>
+      </tr>
+</table>
+</p>
+<h3> Bebidas </h3>
+  <table class="table">
+    <tr>
+      <td><span class="text">Bebida</span></td>
+      <td><span class="text">Tamaño</span></td>
+      <td><span class="text">Precio</span></td>
+    </tr>
+    {% for drink in purchase.drink.all %}
+    <tr>
+      <td>{{drink.name}}</td>
+      <td>{{drink.size}}</td>
+      <td>{{drink.price}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</p>
+<h3> Pizzas </h3>
+
+<table class="table">
+  <tr>
+    <td><span class="text">Tamaño</span></td>
+    <td><span class="text">Ingredientes</span></td>
+  </tr>
+  {% for pizza in pizzas %}
+  <tr>
+    <td>{{pizza.size}}</td>
+    <td>{% for ingredient in pizza.ingredient.all %}
+      <p>{{ingredient}},</p>
+      {% endfor %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+</p>
+<h3> Total: {{ purchase.total_price }} </h3>
+
+
+{% endblock %}
