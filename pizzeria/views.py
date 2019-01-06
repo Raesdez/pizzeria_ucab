@@ -48,7 +48,7 @@ def index(request):
 
 class PurchasePizzaCreate(CreateView):
     model = Purchase
-    fields = ['client_id','client_name','drink',]
+    form_class = PurchaseForm
     template_name = 'public/purchase_form.html'
     success_url = reverse_lazy('index')
 
@@ -69,6 +69,8 @@ class PurchasePizzaCreate(CreateView):
             if pizzas.is_valid():
                 pizzas.instance = self.object
                 pizzas.save()
+
+            self.object.calculate_price()
         return super(PurchasePizzaCreate, self).form_valid(form)
 
 

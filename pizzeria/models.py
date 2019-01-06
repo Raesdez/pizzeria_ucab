@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models import Sum
+
 
 # Create your models here.
 
@@ -30,6 +32,23 @@ class Purchase(models.Model):
     client_id = models.IntegerField(default=0, blank=False)
     client_name = models.CharField(max_length=50, blank=False)
     drink = models.ManyToManyField(Drink, blank=True, null=True)
+
+    def calculate_price(self):
+        result = 0.00
+
+        #Obtener lista de pizzas y sumar los ingredientes y el tamano de cada una
+        pizzas_list = Pizza.objects.filter(purchase=self.pk)
+        for pizza in pizzas_list:
+            sum = (pizza.ingredient.all().aggregate(Sum('price')))['price__sum']
+            result += (sum + pizza.size.price) if sum != None else pizza.size.price
+
+        #Obtener la suma de las bebidas de la compra
+        sum = self.drink.all().aggregate(Sum('price'))['price__sum']
+        result += sum if sum != None else 0
+
+        #Asignar y guardar cambios al pedido
+        self.total_price = result
+        self.save()
 
 class Pizza(models.Model):
     purchase = models.ForeignKey(Purchase, blank=False, on_delete=models.CASCADE)

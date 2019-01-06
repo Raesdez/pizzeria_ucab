@@ -20,23 +20,7 @@ class PizzaForm(forms.ModelForm):
 
 PizzaFormSet = inlineformset_factory(Purchase, Pizza,
                                             form=PizzaForm, extra=1)
-"""
-class PizzaForm(forms.ModelForm):
-    class Meta:
-        model = Pizza
-        fields = [
-            'size',
-            'ingredient'
-        ]
-        labels = {
-            'size': 'Tamaño',
-            'ingredient': 'Ingredientes',
-        }
-        widgets = {
-            'size': forms.RadioSelect(),
-            'ingredient': forms.CheckboxSelectMultiple(),
-        }
-"""
+
 class PurchaseForm(forms.ModelForm):
     class Meta:
         model = Purchase
