@@ -48,7 +48,7 @@ def index(request):
 
 class PurchasePizzaCreate(CreateView):
     model = Purchase
-    fields = ['client_id','client_name','drink',]
+    form_class = PurchaseForm
     template_name = 'public/purchase_form.html'
     success_url = reverse_lazy('index')
 
@@ -70,32 +70,3 @@ class PurchasePizzaCreate(CreateView):
                 pizzas.instance = self.object
                 pizzas.save()
         return super(PurchasePizzaCreate, self).form_valid(form)
-
-
-class PizzaCreate(CreateView):
-    model = Pizza
-    template_name = 'public/pizza_form.html'
-    form_class = PizzaForm
-    second_form_class = PurchaseForm
-    success_url = reverse_lazy('index')
-
-    def get_context_data(self, **kwargs):
-        context = super(PizzaCreate, self).get_context_data(**kwargs)
-        if 'form' not in context:
-    	       context['form'] = self.form_class(self.request.GET)
-        if 'form2' not in context:
-    	       context['form2'] = self.second_form_class(self.request.GET)
-        return context
-
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object
-        form = self.form_class(request.POST)
-        form2 = self.second_form_class(request.POST)
-        if form.is_valid() and form2.is_valid():
-            pizza = form.save(commit=False)
-            pizza.purchase = form2.save()
-            pizza = form.save()
-            pizza.save()
-            return HttpResponseRedirect(self.get_success_url())
-        else:
-            return self.render_to_response(self.get_context_data(form=form, form2=form2))

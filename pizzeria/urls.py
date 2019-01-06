@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include, path
 
-from .views import HomeView, get_data, ChartData, index, PizzaCreate,PurchasePizzaCreate
+from .views import HomeView, get_data, ChartData, index,PurchasePizzaCreate
 
 
 urlpatterns = [
