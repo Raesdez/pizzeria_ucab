@@ -1,6 +1,6 @@
 from django import forms
+from django.forms import inlineformset_factory
 from pizzeria.models import Purchase, Pizza
-
 
 class PizzaForm(forms.ModelForm):
     class Meta:
@@ -18,6 +18,25 @@ class PizzaForm(forms.ModelForm):
             'ingredient': forms.CheckboxSelectMultiple(),
         }
 
+PizzaFormSet = inlineformset_factory(Purchase, Pizza,
+                                            form=PizzaForm, extra=1)
+"""
+class PizzaForm(forms.ModelForm):
+    class Meta:
+        model = Pizza
+        fields = [
+            'size',
+            'ingredient'
+        ]
+        labels = {
+            'size': 'Tamaño',
+            'ingredient': 'Ingredientes',
+        }
+        widgets = {
+            'size': forms.RadioSelect(),
+            'ingredient': forms.CheckboxSelectMultiple(),
+        }
+"""
 class PurchaseForm(forms.ModelForm):
     class Meta:
         model = Purchase

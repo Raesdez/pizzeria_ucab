@@ -3,11 +3,12 @@ from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import View, CreateView
 from pizzeria.models import Purchase, Pizza
-from pizzeria.forms import PizzaForm, PurchaseForm
+from pizzeria.forms import PizzaForm, PurchaseForm, PizzaFormSet
 from django.urls import reverse_lazy
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.db import transaction
 
 
 User = get_user_model()
@@ -44,6 +45,32 @@ class ChartData(APIView):
 
 def index(request):
     return render(request, 'public/home.html')
+
+class PurchasePizzaCreate(CreateView):
+    model = Purchase
+    fields = ['client_id','client_name','drink',]
+    template_name = 'public/purchase_form.html'
+    success_url = reverse_lazy('index')
+
+    def get_context_data(self, **kwargs):
+        data = super(PurchasePizzaCreate, self).get_context_data(**kwargs)
+        if self.request.POST:
+            data['pizzas'] = PizzaFormSet(self.request.POST)
+        else:
+            data['pizzas'] = PizzaFormSet()
+        return data
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        pizzas = context['pizzas']
+        with transaction.atomic():
+            self.object = form.save()
+
+            if pizzas.is_valid():
+                pizzas.instance = self.object
+                pizzas.save()
+        return super(PurchasePizzaCreate, self).form_valid(form)
+
 
 class PizzaCreate(CreateView):
     model = Pizza
