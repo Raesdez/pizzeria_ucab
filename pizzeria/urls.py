@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include, path
 
-from .views import HomeView, get_data, ChartData, index,PurchasePizzaCreate, receipt, PurchaseList, reportes
+from .views import HomeView, get_data, ChartData, index,PurchasePizzaCreate, receipt, PurchaseList, reportes, Pdf
 
 
 urlpatterns = [
@@ -29,4 +29,5 @@ urlpatterns = [
     url(r'^purchase', PurchasePizzaCreate.as_view(), name='compra'),
     url(r'^receipt',receipt,name='receipt'),
     url(r'^reportes/lista_ventas', PurchaseList.as_view(), name='lista_ventas'),
+    path('render/pdf/', Pdf.as_view(), name='Pdf'),
 ]

@@ -14,28 +14,35 @@
 </table>
 </p>
 <h3> Bebidas </h3>
-  <table class="table">
-    <tr>
-      <td><span class="text">Bebida</span></td>
-      <td><span class="text">Tamaño</span></td>
-      <td><span class="text">Precio</span></td>
-    </tr>
-    {% for drink in purchase.drink.all %}
-    <tr>
-      <td>{{drink.name}}</td>
-      <td>{{drink.size}}</td>
-      <td>{{drink.price}}</td>
-    </tr>
-    {% endfor %}
-  </table>
+<table class="table">
+  <thead>
+      <tr>
+          <th><span class="text">Bebida</span></th>
+          <th><span class="text">Tamaño</span></th>
+          <th><span class="text">Precio</span></th>
+      </tr>
+      </thead>
+  <tbody>
+
+  {% for drink in purchase.drink.all %}
+  <tr>
+    <td>{{drink.name}}</td>
+    <td>{{drink.size}}</td>
+    <td>{{drink.price}}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
 </p>
 <h3> Pizzas </h3>
-
 <table class="table">
-  <tr>
-    <td><span class="text">Tamaño</span></td>
-    <td><span class="text">Ingredientes</span></td>
-  </tr>
+  <thead>
+      <tr>
+          <th><span class="text">Tamaño</span></th>
+          <th><span class="text">Ingredientes</span></th>
+      </tr>
+  </thead>
+  <tbody>
   {% for pizza in pizzas %}
   <tr>
     <td>{{pizza.size}}</td>
@@ -45,11 +52,15 @@
     </td>
   </tr>
   {% endfor %}
+  </tbody>
 </table>
 </p>
 <h3> Total: {{ purchase.total_price }} </h3>
 <p></p>
+
 <a href="{% url 'index' %}">Volver a inicio</a>
+</p>
+<a href="{% url 'Pdf' %}">Obtener PDF</a>
 <p></p>
 
 {% endblock %}

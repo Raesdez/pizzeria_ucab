@@ -9,6 +9,7 @@ from django.urls import reverse_lazy
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db import transaction
+from pizzeria.render import Render
 
 
 User = get_user_model()
@@ -53,6 +54,17 @@ def receipt(request):
     purchase = Purchase.objects.latest('date')
     pizzas = Pizza.objects.filter(purchase=purchase.pk)
     return render_to_response('public/receipt.html', {'purchase': purchase,'pizzas':pizzas})
+
+class Pdf(View):
+
+    def get(self, request):
+        purchase = Purchase.objects.latest('date')
+        pizzas = Pizza.objects.filter(purchase=purchase.pk)
+        params = {
+            'purchase': purchase,
+            'pizzas': pizzas,
+        }
+        return Render.render('public/pdf.html', params)
 
 class PurchaseList(ListView):
 	model = Purchase
