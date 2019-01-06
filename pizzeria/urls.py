@@ -17,14 +17,16 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include, path
 
-from .views import HomeView, get_data, ChartData, index,PurchasePizzaCreate, receipt
+from .views import HomeView, get_data, ChartData, index,PurchasePizzaCreate, receipt, PurchaseList, reportes
 
 
 urlpatterns = [
     url(r'^$', index, name='index'),
-    url(r'^reportes', HomeView.as_view(), name='home'),
-    url(r'^api/data/$', get_data, name='api-data'),
-    url(r'^api/chart/data/$', ChartData.as_view()),
+    url(r'^reportes$', reportes, name='reportes'),
+    #url(r'^reportes', HomeView.as_view(), name='home'),
+    #url(r'^api/data/$', get_data, name='api-data'),
+    #url(r'^api/chart/data/$', ChartData.as_view()),
     url(r'^purchase', PurchasePizzaCreate.as_view(), name='compra'),
-    url(r'^receipt',receipt,name='receipt')
+    url(r'^receipt',receipt,name='receipt'),
+    url(r'^reportes/lista_ventas', PurchaseList.as_view(), name='lista_ventas'),
 ]

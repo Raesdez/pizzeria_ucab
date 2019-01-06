@@ -1,0 +1,39 @@
+{% extends 'plantillas/public.html' %}
+
+{% block content %}
+<center>
+<h1>Lista de ventas realizadas</h1>
+</center>
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<td>Nombre</td>
+			<td>Cédula</td>
+			<td>Fecha</td>
+			<td>Total</td>
+		</tr>
+
+	</thead>
+	<tbody>
+		{% if object_list %}
+		{% for purchase in object_list %}
+		<tr>
+			<td>{{ purchase.client_name }}</td>
+			<td>{{ purchase.client_id }}</td>
+			<td>{{ purchase.date }}</td>
+			<td>{{ purchase.total_price }}</td>
+		</tr>
+		{% endfor %}
+
+		{% else %}
+		<h1>No hay registros de solicitudes</h1>
+		{% endif %}
+	</tbody>
+</table>
+<center>
+<a href="{% url 'reportes' %}">Atrás</a>
+<p></p>
+<a href="{% url 'index' %}">Volver a inicio</a>
+<p></p>
+<center>
+{% endblock %}

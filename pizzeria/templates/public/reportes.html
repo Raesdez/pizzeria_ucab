@@ -1,0 +1,38 @@
+{% extends 'plantillas/public.html' %}
+
+{% block content %}
+<center>
+<h1>Reportes</h1>
+<table class="table table-bordered">
+  <tbody>
+    <tr>
+      <td>
+        <a href="{% url 'lista_ventas' %}">Lista de ventas realizadas</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="#">Lista de ventas realizadas por día</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="#">Lista de ventas realizadas por tamaño de pizza</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="#">Lista de ventas realizadas por ingredientes</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <a href="#">Lista de ventas realizadas por clientes</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<a href="{% url 'index' %}">Volver a inicio</a>
+<p></p>
+<center>
+{% endblock %}
