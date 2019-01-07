@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models import Sum
-form django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError
 
 
 # Create your models here.
