@@ -55,6 +55,10 @@ def receipt(request):
     pizzas = Pizza.objects.filter(purchase=purchase.pk)
     return render_to_response('public/receipt.html', {'purchase': purchase,'pizzas':pizzas})
 
+def purchase_list_client(request):
+    purchase = Purchase.objects.order_by('client_id')
+    return render_to_response('public/purchase_list_client.html', {'purchase': purchase})
+
 class Pdf(View):
 
     def get(self, request):

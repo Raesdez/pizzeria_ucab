@@ -1,0 +1,36 @@
+{% extends 'plantillas/public.html' %}
+
+{% block content %}
+
+{% regroup purchase by client_id as client_list %}
+<center>
+<h1>Lista de ventas realizadas por cliente</h1>
+
+{% for client_id in client_list %}
+<h3>{{ client_id.grouper }}</h3>
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<td>Nombre</td>
+			<td>Fecha</td>
+			<td>Total</td>
+		</tr>
+
+	</thead>
+	<tbody>
+		{% for purchase in client_id.list %}
+		<tr>
+			<td>{{ purchase.client_name }}</td>
+			<td>{{ purchase.date }}</td>
+			<td>{{ purchase.total_price }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endfor %}
+<a href="{% url 'reportes' %}">Atrás</a>
+<p></p>
+<a href="{% url 'index' %}">Volver a inicio</a>
+<p></p>
+</center>
+{% endblock %}
