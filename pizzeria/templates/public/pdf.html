@@ -4,7 +4,7 @@
 <html lang="es">
   <head>
     <meta charset="utf-8">
-       <title>Sales Report</title>
+       <title>Recibo de compra Pizzería</title>
        <style type="text/css">
            @page {
                size: A4;
@@ -96,7 +96,7 @@
     <tr>
       <td>{{pizza.size}}</td>
       <td>{% for ingredient in pizza.ingredient.all %}
-        <p>{{ingredient}},</p>
+        <p>{{ingredient}}</p>
         {% endfor %}
       </td>
     </tr>
