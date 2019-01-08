@@ -2,13 +2,14 @@ from django.contrib.auth import get_user_model
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render,render_to_response
 from django.views.generic import View, CreateView, ListView
-from pizzeria.models import Purchase, Pizza
+from pizzeria.models import Purchase, Pizza, Ingredient
 from pizzeria.forms import PizzaForm, PurchaseForm, PizzaFormSet
 from django.urls import reverse_lazy
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.db import transaction
+from django.db import transaction, connection
+
 from pizzeria.render import Render
 
 
@@ -58,6 +59,21 @@ def receipt(request):
 def purchase_list_client(request):
     purchase = Purchase.objects.order_by('client_id')
     return render_to_response('public/purchase_list_client.html', {'purchase': purchase})
+
+def purchase_list_ingredients(request):
+    dict = {}
+    ingredients = Ingredient.objects.all()
+
+    for ingredient in ingredients:
+         result =None
+         with connection.cursor() as cursor:
+            cursor.execute("""SELECT a.* from pizzeria_purchase as a
+                            WHERE a.id in (SELECT b.id from pizzeria_pizza as b, pizzeria_pizza_ingredient as c
+                                            WHERE b.id = c.pizza_id and c.ingredient_id = %s)""",[ingredient.pk])
+            result = cursor.fetchall()
+         dict[ingredient.name] = result
+
+    return render_to_response('public/purchase_list_ingredients.html', {'dict':dict})
 
 class Pdf(View):
 
