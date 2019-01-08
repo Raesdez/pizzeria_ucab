@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 from .views import HomeView, get_data, ChartData, index,PurchasePizzaCreate, receipt, PurchaseList, reportes, Pdf, purchase_list_client
-from .views import purchase_list_ingredients
+from .views import purchase_list_ingredients, purchase_list_sizes
 
 urlpatterns = [
     url(r'^$', index, name='index'),
@@ -32,5 +32,6 @@ urlpatterns = [
     url(r'^/reportes/lista_ventas_client$', purchase_list_client, name='lista_ventas_client'),
     #David ayuda con esta ruta
     url(r'^/lista_ventas_ingredientes',purchase_list_ingredients,name='lista_ventas_ingredientes'),
+    url(r'^/lista_ventas_tamanos',purchase_list_sizes,name='lista_ventas_tamanos'),
     path('render/pdf/', Pdf.as_view(), name='Pdf'),
 ]

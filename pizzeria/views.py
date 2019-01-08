@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render,render_to_response
 from django.views.generic import View, CreateView, ListView
-from pizzeria.models import Purchase, Pizza, Ingredient
+from pizzeria.models import Purchase, Pizza, Ingredient, Size
 from pizzeria.forms import PizzaForm, PurchaseForm, PizzaFormSet
 from django.urls import reverse_lazy
 
@@ -74,6 +74,21 @@ def purchase_list_ingredients(request):
          dict[ingredient.name] = result
 
     return render_to_response('public/purchase_list_ingredients.html', {'dict':dict})
+
+def purchase_list_sizes(request):
+    dict = {}
+    sizes = Size.objects.all()
+
+    for size in sizes:
+         result =None
+         with connection.cursor() as cursor:
+            cursor.execute("""SELECT a.* from pizzeria_purchase as a
+                            WHERE a.id in (SELECT b.id from pizzeria_pizza as b
+                                            WHERE b.size_id = %s)""",[size.pk])
+            result = cursor.fetchall()
+         dict[size.name] = result
+
+    return render_to_response('public/purchase_list_sizes.html', {'dict':dict})
 
 class Pdf(View):
 

@@ -1,0 +1,38 @@
+{% extends 'plantillas/public.html' %}
+
+{% block content %}
+
+
+<center>
+<h1>Lista de ventas realizadas por tamaño</h1>
+
+{% for key, values in dict.items %}
+<h3>{{ key|title }}</h3>
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<td>Nombre</td>
+      <td>Cedula</td>
+			<td>Fecha</td>
+			<td>Total</td>
+		</tr>
+
+	</thead>
+	<tbody>
+		{% for purchase in values %}
+		<tr>
+			<td>{{ purchase.3 }}</td>
+      <td>{{ purchase.2 }}</td>
+			<td>{{ purchase.4|date:'Y-m-d H:i' }}</td>
+			<td>{{ purchase.1 }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endfor %}
+<a href="{% url 'reportes' %}">Atrás</a>
+<p></p>
+<a href="{% url 'index' %}">Volver a inicio</a>
+<p></p>
+</center>
+{% endblock %}
