@@ -13,38 +13,6 @@ from django.db import transaction, connection
 from pizzeria.render import Render
 
 
-User = get_user_model()
-
-class HomeView(View):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'admin/charts.html', {"customers": 10})
-
-
-
-def get_data(request, *args, **kwargs):
-    data = {
-        "sales": 100,
-        "customers": 10,
-    }
-    return JsonResponse(data) # http response
-
-
-class ChartData(APIView):
-    authentication_classes = []
-    permission_classes = []
-
-    def get(self, request, format=None):
-        qs_count = User.objects.all().count()
-        labels = ["Users", "Blue", "Yellow", "Green", "Purple", "Orange"]
-        default_items = [qs_count, 23, 2, 3, 12, 2]
-        data = {
-                "labels": labels,
-                "default": default_items,
-        }
-        print ("The data is",data)
-        return Response(data)
-
-
 def index(request):
     return render(request, 'public/home.html')
 

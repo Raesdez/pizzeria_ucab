@@ -17,21 +17,17 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include, path
 
-from .views import HomeView, get_data, ChartData, index,PurchasePizzaCreate, receipt, PurchaseList, reportes, Pdf, purchase_list_client
+from .views import index,PurchasePizzaCreate, receipt, PurchaseList, reportes, Pdf, purchase_list_client
 from .views import purchase_list_ingredients, purchase_list_sizes
 
 urlpatterns = [
     url(r'^$', index, name='index'),
     url(r'^reportes$', reportes, name='reportes'),
-    #url(r'^reportes', HomeView.as_view(), name='home'),
-    #url(r'^api/data/$', get_data, name='api-data'),
-    #url(r'^api/chart/data/$', ChartData.as_view()),
     url(r'^purchase', PurchasePizzaCreate.as_view(), name='compra'),
     url(r'^receipt',receipt,name='receipt'),
-    url(r'^/reportes/lista_ventas$', PurchaseList.as_view(), name='lista_ventas'),
-    url(r'^/reportes/lista_ventas_client$', purchase_list_client, name='lista_ventas_client'),
-    #David ayuda con esta ruta
-    url(r'^/reportes/lista_ventas_ingredientes$',purchase_list_ingredients,name='lista_ventas_ingredientes'),
-    url(r'^/reportes/lista_ventas_tamanos$',purchase_list_sizes,name='lista_ventas_tamanos'),
+    url(r'^reportes/lista_ventas$', PurchaseList.as_view(), name='lista_ventas'),
+    url(r'^reportes/lista_ventas_client$', purchase_list_client, name='lista_ventas_client'),
+    url(r'^reportes/lista_ventas_ingredientes$',purchase_list_ingredients,name='lista_ventas_ingredientes'),
+    url(r'^reportes/lista_ventas_tamanos$',purchase_list_sizes,name='lista_ventas_tamanos'),
     path('render/pdf/', Pdf.as_view(), name='Pdf'),
 ]
