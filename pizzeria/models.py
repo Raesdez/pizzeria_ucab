@@ -12,6 +12,7 @@ class Size(models.Model):
     def __str__(self):
         return '{} {}'.format(self.name, self.price)
 
+    """ Metodo llamado antes de save para validar los campos"""
     def clean(self):
         if self.price<0:
             raise ValidationError('El precio debe ser positivo')
@@ -25,6 +26,7 @@ class Ingredient(models.Model):
     def __str__(self):
         return '{} {}'.format(self.name, self.price)
 
+    """ Metodo llamado antes de save para validar los campos"""
     def clean(self):
         if self.price<0:
             raise ValidationError('El precio debe ser positivo')
@@ -39,6 +41,7 @@ class Drink(models.Model):
     def __str__(self):
         return '{} {} {}'.format(self.name, self.size, self.price)
 
+    """ Metodo llamado antes de save para validar los campos"""
     def clean(self):
         if self.price<0:
             raise ValidationError('El precio debe ser positivo')

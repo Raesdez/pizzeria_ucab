@@ -26,29 +26,36 @@ def receipt(request):
     pizzas = Pizza.objects.filter(purchase=purchase.pk)
     return render_to_response('public/receipt.html', {'purchase': purchase,'pizzas':pizzas})
 
+""" Carga la template del reporte de compras por cliente y envia la lista de compras ordenadas por cliente
+    que luego seran agrupadas"""
 def purchase_list_client(request):
     purchase = Purchase.objects.order_by('client_id')
     return render_to_response('public/purchase_list_client.html', {'purchase': purchase})
 
+""" Similar al reporte de cliente, carga el template enviando las compras ordenadas por fecha"""
 def purchase_list_date(request):
     purchase = Purchase.objects.order_by('date')
     return render_to_response('public/purchase_list_date.html', {'purchase': purchase})
 
+""" Este metodo utiliza un query raw para poder hacer un join completo y Obtener
+    las compras con al menos una pizza con el ingrediente correspondiente"""
 def purchase_list_ingredients(request):
-    dict = {}
+    dict = {} #El diccionario tendra los ingredientes como clave y las compras como valores
     ingredients = Ingredient.objects.all()
-
+    #Iterar todos los ingredeintes
     for ingredient in ingredients:
          result =None
          with connection.cursor() as cursor:
             cursor.execute("""SELECT a.* from pizzeria_purchase as a, pizzeria_pizza as b
                             WHERE a.id = b.purchase_id AND b.id in (SELECT b.id from pizzeria_pizza as b, pizzeria_pizza_ingredient as c
                                             WHERE b.id = c.pizza_id and c.ingredient_id = %s)""",[ingredient.pk])
-            result = cursor.fetchall()
+            result = cursor.fetchall() #Obtener resultados de los queries
          dict[ingredient.name] = result
 
     return render_to_response('public/purchase_list_ingredients.html', {'dict':dict})
 
+""" Similar al metodo del reporte de ingredientes, realiza un query raw para hacer un join
+    y obtener las ventas con al menos una pizza que tenga el tamano indicado"""
 def purchase_list_sizes(request):
     dict = {}
     sizes = Size.objects.all()

@@ -22,8 +22,9 @@ from .views import purchase_list_ingredients, purchase_list_sizes, purchase_list
 
 urlpatterns = [
     url(r'^$', index, name='index'),
-    url(r'^reportes$', reportes, name='reportes'),
     url(r'^purchase', PurchasePizzaCreate.as_view(), name='compra'),
+    #Rutas para los reportes
+    url(r'^reportes$', reportes, name='reportes'),
     url(r'^reportes/lista_ventas$', PurchaseList.as_view(), name='lista_ventas'),
     url(r'^reportes/lista_ventas_client$', purchase_list_client, name='lista_ventas_client'),
     url(r'^reportes/lista_ventas_ingredientes$',purchase_list_ingredients,name='lista_ventas_ingredientes'),
