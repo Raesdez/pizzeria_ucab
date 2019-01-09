@@ -47,7 +47,7 @@ class Drink(models.Model):
 
 class Purchase(models.Model):
     total_price = models.FloatField(default=0, blank=False)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateField(auto_now_add=True)
     client_id = models.IntegerField(default=0, blank=False)
     client_name = models.CharField(max_length=50, blank=False)
     drink = models.ManyToManyField(Drink, blank=True, null=True)
