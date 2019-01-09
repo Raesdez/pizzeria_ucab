@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^/reportes/lista_ventas$', PurchaseList.as_view(), name='lista_ventas'),
     url(r'^/reportes/lista_ventas_client$', purchase_list_client, name='lista_ventas_client'),
     #David ayuda con esta ruta
-    url(r'^/lista_ventas_ingredientes',purchase_list_ingredients,name='lista_ventas_ingredientes'),
-    url(r'^/lista_ventas_tamanos',purchase_list_sizes,name='lista_ventas_tamanos'),
+    url(r'^/reportes/lista_ventas_ingredientes$',purchase_list_ingredients,name='lista_ventas_ingredientes'),
+    url(r'^/reportes/lista_ventas_tamanos$',purchase_list_sizes,name='lista_ventas_tamanos'),
     path('render/pdf/', Pdf.as_view(), name='Pdf'),
 ]
