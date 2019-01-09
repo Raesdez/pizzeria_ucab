@@ -9,16 +9,18 @@ from django.urls import reverse_lazy
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db import transaction, connection
-
 from pizzeria.render import Render
 
-
+""" Resumen: carga la template que tiene el menu de los reportes"""
 def index(request):
     return render(request, 'public/home.html')
 
+""" Resumen: carga la template que tiene el menu de los reportes"""
 def reportes(request):
     return render(request, 'public/reportes.html')
 
+""" Resumen: obtiene la informacion de la compra y de las pizzas y renderiza el
+             template de recibo"""
 def receipt(request):
     purchase = Purchase.objects.latest('date')
     pizzas = Pizza.objects.filter(purchase=purchase.pk)
@@ -62,6 +64,8 @@ def purchase_list_sizes(request):
 
     return render_to_response('public/purchase_list_sizes.html', {'dict':dict})
 
+"""Resumen: View Class que contiene el metodo para enviar los datos de la compra
+            al template que sera renderizado como PDF"""
 class Pdf(View):
 
     def get(self, request):
@@ -73,15 +77,18 @@ class Pdf(View):
         }
         return Render.render('public/pdf.html', params)
 
+""" Resumen: ListView que consulta todas las compras para ser cargadas en el template del reporte"""
 class PurchaseList(ListView):
 	model = Purchase
 	template_name = 'public/purchase_list.html'
 
+""" Resumen: Clase en forma de Create View que carga el form de Compra, luego almacena
+             la compra y finalmente le asigna los datos de las pizzas en el form anidado """
 class PurchasePizzaCreate(CreateView):
     model = Purchase
-    form_class = PurchaseForm
+    form_class = PurchaseForm #Cargar el form
     template_name = 'public/purchase_form.html'
-    success_url = reverse_lazy('receipt')
+    success_url = reverse_lazy('receipt') #Ir al recibo posteriormente
 
     def get_context_data(self, **kwargs):
         data = super(PurchasePizzaCreate, self).get_context_data(**kwargs)
@@ -93,13 +100,13 @@ class PurchasePizzaCreate(CreateView):
 
     def form_valid(self, form):
         context = self.get_context_data()
-        pizzas = context['pizzas']
+        pizzas = context['pizzas'] #Obtener las pizzas del contexto
         with transaction.atomic():
-            self.object = form.save()
+            self.object = form.save()   #Almacenar la compra
 
             if pizzas.is_valid():
-                pizzas.instance = self.object
-                pizzas.save()
+                pizzas.instance = self.object #Indicar la entidad padre de las pizzas
+                pizzas.save()   #Alcacenar las pizzas
 
             self.object.calculate_price()
         return super(PurchasePizzaCreate, self).form_valid(form)

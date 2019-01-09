@@ -52,6 +52,7 @@ class Purchase(models.Model):
     client_name = models.CharField(max_length=50, blank=False)
     drink = models.ManyToManyField(Drink, blank=True, null=True)
 
+    """Resumen: metodo que es llamado para calcular el precio de una compra """
     def calculate_price(self):
         result = 0.00
 

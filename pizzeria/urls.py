@@ -24,11 +24,12 @@ urlpatterns = [
     url(r'^$', index, name='index'),
     url(r'^reportes$', reportes, name='reportes'),
     url(r'^purchase', PurchasePizzaCreate.as_view(), name='compra'),
-    url(r'^receipt',receipt,name='receipt'),
     url(r'^reportes/lista_ventas$', PurchaseList.as_view(), name='lista_ventas'),
     url(r'^reportes/lista_ventas_client$', purchase_list_client, name='lista_ventas_client'),
     url(r'^reportes/lista_ventas_ingredientes$',purchase_list_ingredients,name='lista_ventas_ingredientes'),
     url(r'^reportes/lista_ventas_tamanos$',purchase_list_sizes,name='lista_ventas_tamanos'),
     url(r'^reportes/lista_ventas_dia$',purchase_list_date,name='lista_ventas_dia'),
+    #Ruta para el recibo y Path para la factura en PDF
+    url(r'^receipt',receipt,name='receipt'),
     path('render/pdf/', Pdf.as_view(), name='Pdf'),
 ]
