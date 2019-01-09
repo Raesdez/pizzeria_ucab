@@ -1,0 +1,36 @@
+{% extends 'plantillas/public.html' %}
+
+{% block content %}
+
+{% regroup purchase by date as date_list %}
+<center>
+<h1>Lista de ventas realizadas por día</h1>
+
+{% for date in date_list %}
+<h3>{{ date.grouper }}</h3>
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<td>Nombre</td>
+			<td>Fecha</td>
+			<td>Total</td>
+		</tr>
+
+	</thead>
+	<tbody>
+		{% for purchase in date.list %}
+		<tr>
+			<td>{{ purchase.client_name }}</td>
+			<td>{{ purchase.date }}</td>
+			<td>{{ purchase.total_price }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endfor %}
+<a href="{% url 'reportes' %}">Atrás</a>
+<p></p>
+<a href="{% url 'index' %}">Volver a inicio</a>
+<p></p>
+</center>
+{% endblock %}

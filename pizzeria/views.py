@@ -28,6 +28,10 @@ def purchase_list_client(request):
     purchase = Purchase.objects.order_by('client_id')
     return render_to_response('public/purchase_list_client.html', {'purchase': purchase})
 
+def purchase_list_date(request):
+    purchase = Purchase.objects.order_by('date')
+    return render_to_response('public/purchase_list_date.html', {'purchase': purchase})
+
 def purchase_list_ingredients(request):
     dict = {}
     ingredients = Ingredient.objects.all()
