@@ -67,8 +67,8 @@ def purchase_list_ingredients(request):
     for ingredient in ingredients:
          result =None
          with connection.cursor() as cursor:
-            cursor.execute("""SELECT a.* from pizzeria_purchase as a
-                            WHERE a.id in (SELECT b.id from pizzeria_pizza as b, pizzeria_pizza_ingredient as c
+            cursor.execute("""SELECT a.* from pizzeria_purchase as a, pizzeria_pizza as b
+                            WHERE a.id = b.purchase_id AND b.id in (SELECT b.id from pizzeria_pizza as b, pizzeria_pizza_ingredient as c
                                             WHERE b.id = c.pizza_id and c.ingredient_id = %s)""",[ingredient.pk])
             result = cursor.fetchall()
          dict[ingredient.name] = result
